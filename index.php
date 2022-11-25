@@ -15,7 +15,7 @@ $sql =  mysqli_query($conn, "ALTER TABLE siswa AUTO_INCREMENT = 1");
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Siswa RPL</title>
     <link rel="stylesheet" href="assets/css/style.php">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,6 +54,9 @@ $sql =  mysqli_query($conn, "ALTER TABLE siswa AUTO_INCREMENT = 1");
                         Nomor hp
                     </th>
                     <th>
+                        Foto
+                    </th>
+                    <th>
                         Kelas
                     </th>
                     <th>Aksi</th>
@@ -62,15 +65,16 @@ $sql =  mysqli_query($conn, "ALTER TABLE siswa AUTO_INCREMENT = 1");
             <tbody>
                 <tr>
                     <?php
-
+                    $no = 1;
                     while ($res = mysqli_fetch_array($result)) {
                         echo "<tr>";
-                        echo "<td>"  . $res['id'] . "</td>";
-                        echo "<td>"  . $res['nama'] . "</td>";
+                        echo "<td>"  . $no++ . "</td>";
+                        echo "<td style='text-transform: capitalize'>"  . $res['nama'] . "</td>";
                         echo "<td>"  . $res['email'] . "</td>";
                         echo "<td>"  . $res['tgl_lahir'] . "</td>";
                         echo "<td>"  . $res['jk'] . "</td>";
                         echo "<td>"  . $res['no_hp'] . "</td>";
+                        echo "<td style='text-align:center'><img src='uploads/" . $res['foto'] . "' width='55' height='55'></td>";
                         echo "<td>"  . $res['kelas'] . "</td>";
                         echo "<td class=\"aksi\"><a href=\"edit.php?id=$res[id]\" class=\"\loli\">Edit</a><a href=\"delete.php?id=$res[id]\" onClick= \"return confirm('Yakin untuk menghapus?')\">Hapus</a></td>";
                     }
@@ -79,7 +83,7 @@ $sql =  mysqli_query($conn, "ALTER TABLE siswa AUTO_INCREMENT = 1");
             </tbody>
             <tfoot>
                 <tr>
-                    <th colspan='8'>
+                    <th colspan='10'>
                         Tahun: 2022
                     </th>
                 </tr>

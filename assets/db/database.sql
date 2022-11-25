@@ -9,6 +9,7 @@ CREATE TABLE `siswa` (
   `tgl_lahir` char(100) NOT NULL,
   `jk` varchar(15) NOT NULL,
   `no_hp` CHAR(14) NOT NULL,  
+  `foto` BLOB(20) NOT NULL,
   `kelas` varchar(5) NOT NULL,  
   PRIMARY KEY  (`id`)
 );

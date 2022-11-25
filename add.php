@@ -9,11 +9,15 @@ if (isset($_POST['submit'])) {
     $jk = mysqli_real_escape_string($conn, $_POST['jk']);
     $no_hp = mysqli_real_escape_string($conn, $_POST['no_hp']);
     $kelas = mysqli_real_escape_string($conn, $_POST['kelass']);
+    $nama_file = $_FILES['gambar']['name'];
+    $tmp_file = $_FILES['gambar']['tmp_name'];
+    $path = "uploads/" . $nama_file;
 
+    move_uploaded_file($tmp_file, $path);
     if (empty($nama) || empty($email) || empty($tgl_lahir) || empty($jk) || empty($no_hp) || empty($kelas)) {
         echo "<font>silahkan lengkapi data anda!!</font>";
     } else {
-        $result = mysqli_query($conn, "INSERT INTO siswa(nama,email,tgl_lahir,jk,no_hp,kelas) VALUES ('$nama','$email','$tgl_lahir','$jk','$no_hp','$kelas')");
+        $result = mysqli_query($conn, "INSERT INTO siswa(nama,email,tgl_lahir,jk,no_hp,foto,kelas) VALUES ('$nama','$email','$tgl_lahir','$jk','$no_hp','$nama_file','$kelas')");
         header('location: berhasil.html');
     }
 
@@ -23,6 +27,9 @@ if (isset($_POST['submit'])) {
 }
 ?>
 
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,7 +37,7 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Data Baru</title>
     <!-- <link rel="stylesheet" href="assets/css/add.css"> -->
     <link rel="stylesheet" href="assets/css/add.css">
     <link rel="stylesheet" type="text/css"
@@ -44,7 +51,7 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         <div class='left-container'>
             <h1>
                 <i class='fas fa-paw'></i>
@@ -62,12 +69,15 @@ if (isset($_POST['submit'])) {
                         <label for='name'>Name</label>
                         <input id='name' name="nama" placeholder="Nama lengkap" type='text' required>
                     </div>
-                    <div class='foto'>
-                        <button id='upload'>
-                            <i class='fas fa-camera-retro'></i>
-                        </button>
-                        <label for='upload'>Tetap semangat!!</label>
-                    </div>
+                    <form action="upload.php" enctype="multipart/form-data" method="post">
+                        <div class='foto'>
+                            <button id='upload'>
+                                <i class='fas fa-camera-retro'></i>
+                            </button>
+                            <label for='upload'>Upload foto</label>
+                            <input type="file" name="gambar" required>
+                        </div>
+                    </form>
                 </div>
                 <div class='set'>
                     <div class='email'>
